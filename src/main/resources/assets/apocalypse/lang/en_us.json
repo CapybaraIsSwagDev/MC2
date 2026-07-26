@@ -1,0 +1,13 @@
+{
+  "itemGroup.apocalypse": "Example Mod Tab",
+  "block.apocalypse.example_block": "Example Block",
+  "item.apocalypse.example_item": "Example Item",
+
+  "apocalypse.configuration.title": "apocalypse Configs",
+  "apocalypse.configuration.section.apocalypse.common.toml": "apocalypse Configs",
+  "apocalypse.configuration.section.apocalypse.common.toml.title": "apocalypse Configs",
+  "apocalypse.configuration.items": "Item List",
+  "apocalypse.configuration.logDirtBlock": "Log Dirt Block",
+  "apocalypse.configuration.magicNumberIntroduction": "Magic Number Text",
+  "apocalypse.configuration.magicNumber": "Magic Number"
+}
