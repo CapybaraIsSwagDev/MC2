@@ -15,7 +15,7 @@ object HighwayGenerator {
 
         val chunkX = chunk.pos.x
         val chunkZ = chunk.pos.z
-        if (HighwayPath.isHighway(chunkX,chunkZ) == HighwayType.RoadType.NONE) {
+        if (HighwayPath.isHighway(chunkX,chunkZ)) {
             return
         }
 
@@ -29,7 +29,8 @@ object HighwayGenerator {
         level: ServerLevel,
         chunk: ChunkAccess
     ) {
-        HighwaySegment.create(level,chunk,0)
+        val type = HighwayPath.getHighwayType(chunk.pos.x,chunk.pos.z)
+        HighwaySegment.create(level,chunk,type)
     }
 }
 

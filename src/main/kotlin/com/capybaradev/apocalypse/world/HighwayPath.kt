@@ -2,7 +2,7 @@ package com.capybaradev.apocalypse.world
 
 object HighwayPath {
 
-    fun isHighway(
+    fun getHighwayType(
         chunkX: Int,
         chunkZ: Int
     ): HighwayType.RoadType {
@@ -19,6 +19,12 @@ object HighwayPath {
             return HighwayType.RoadType.STRAIGHTZ
         }
         return HighwayType.RoadType.NONE
+    }
+    fun isHighway(
+        chunkX: Int,
+        chunkZ: Int
+    ): Boolean {
+        return getHighwayType(chunkX, chunkZ) == HighwayType.RoadType.NONE
     }
 
 

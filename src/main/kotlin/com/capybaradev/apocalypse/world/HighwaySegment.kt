@@ -46,22 +46,21 @@ object HighwaySegment {
     fun create(
         level: ServerLevel,
         chunk: ChunkAccess,
-        orientation: Int
+        type: RoadType
         ) {
             val worldX = chunk.pos.x
-
             val worldZ = chunk.pos.z
 
             val highwayNoise = HighwayNoise(level.seed)
-
-            //var y = highwayNoise.getHeight(worldX, worldZ)
+            //highwayNoise.getHeight(worldX, worldZ)
+            val averageY = getAverageHeight(level, chunk.pos)
             val baseY = 80
 
-            val road = HighwayPath.isHighway(worldX,worldZ)
+            //val road = HighwayPath.getHighwayType(worldX,worldZ)
 
-            when (road) {
+            when (type) {
                 RoadType.STRAIGHTX -> {
-                    println("| road")
+                    //println("| road")
                     var changedPositions = mutableListOf<BlockPos>()
                     for (y in -1 until 8) {
                         for (x in 0 until 16) {
@@ -88,7 +87,7 @@ object HighwaySegment {
                     }
                 }
                 RoadType.STRAIGHTZ -> {
-                    println("- road")
+                    //println("- road")
                     var changedPositions = mutableListOf<BlockPos>()
                     for (y in -1 until 8) {
                         for (x in 0 until 16) {
@@ -142,11 +141,16 @@ object HighwaySegment {
                 }
                 RoadType.NONE -> {
                     println("O road $worldX $worldZ")
+                    return
                 }
             }
-            val pos = BlockPos(worldX, baseY, worldZ)
-            level.chunkSource.lightEngine.checkBlock(pos)
-            createPillar(chunk, pos.x, baseY, pos.z)
+            if (abs(baseY - averageY) > 5) {
+                val pos = BlockPos(8, baseY, 8)
+                println(pos)
+                createPillar(chunk, baseY)
+            }
+
+            level.chunkSource.lightEngine.lightChunk(chunk,true)
 
             // RANDOM POINTS //
     //        var blockplaced = 0
@@ -193,21 +197,27 @@ object HighwaySegment {
             "replaceable"
         )
     )
-    private fun createPillar(chunk: ChunkAccess, blockX: Int,blockY: Int,blockZ: Int) {
-        for (y in 2 until 32) {
-            val pos = BlockPos(blockX, blockY-y, blockZ)
-            val state = chunk.getBlockState(pos)
-            if (state.`is`(HIGHWAY_REPLACEABLE)) {
-                return
+    private fun createPillar(chunk: ChunkAccess, Y: Int) {
+        for (x in 0 until 16) {
+            for (z in 0 until 16) {
+                for (y in 2 until 32) {
+                    if (x == y) {
+                        break
+                    }
+                    val pos = BlockPos(x, Y - y, z)
+                    val state = chunk.getBlockState(pos)
+                    if (state.`is`(HIGHWAY_REPLACEABLE)) {
+                        break
+                    }
+                    val block = Blocks.STONE_BRICKS.defaultBlockState()
+                    chunk.setBlockState(
+                        pos,
+                        block,
+                        false
+                    )
+                }
             }
-            val block = Blocks.STONE_BRICKS.defaultBlockState()
-            chunk.setBlockState(
-                pos,
-                block,
-                false
-            )
         }
-
     }
 
 
