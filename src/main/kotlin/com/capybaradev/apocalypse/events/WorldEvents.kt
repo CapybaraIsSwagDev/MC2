@@ -1,6 +1,7 @@
 package com.capybaradev.apocalypse.events
 
 import com.capybaradev.apocalypse.registry.ModAttachments
+import com.capybaradev.apocalypse.registry.ModRegistries
 import com.capybaradev.apocalypse.world.ApocalypseWorldData
 import com.capybaradev.apocalypse.world.HighwayGenerator
 import com.capybaradev.apocalypse.world.HighwayMapGenerator
@@ -32,6 +33,16 @@ object WorldEvents {
             ModAttachments.HIGHWAY_GENERATED,
             true
         )
+        val registry = level.registryAccess()
+            .lookupOrThrow(ModRegistries.HIGHWAY_SEGMENT)
+
+
+        for (holder in registry.listElements()) {
+            val id = holder.key().location()
+            val value = holder.value()
+
+            println("$id -> ${value.width}")
+        }
 
     }
     @SubscribeEvent
