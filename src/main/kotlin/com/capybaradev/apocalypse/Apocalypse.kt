@@ -27,6 +27,8 @@ class Apocalypse(
 
     }
     private fun registerDataPackRegistries(event: DataPackRegistryEvent.NewRegistry) {
+        println("Registering: ${ModRegistries.HIGHWAY_SEGMENT.location()}")
+
         event.dataPackRegistry(
             ModRegistries.HIGHWAY_SEGMENT,
             HighwaySegment.CODEC,

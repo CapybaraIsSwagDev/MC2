@@ -1,10 +1,5 @@
 {
   "width": 9,
   "height": 6,
-  "material": {
-    "type": "minecraft:simple_state_provider",
-    "state": {
-      "Name": "minecraft:stone_bricks"
-    }
-  }
+  "material": "minecraft:stone_bricks"
 }

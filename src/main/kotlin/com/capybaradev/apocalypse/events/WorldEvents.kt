@@ -68,5 +68,13 @@ object WorldEvents {
             data.generated = true
             data.setDirty()
         }
+        val registry = level.registryAccess()
+            .lookupOrThrow(ModRegistries.HIGHWAY_SEGMENT)
+
+        println("Highway segments:")
+
+        registry.listElements().forEach {
+            println(it.key().location())
+        }
     }
 }
