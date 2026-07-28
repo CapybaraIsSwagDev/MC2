@@ -36,12 +36,10 @@ object WorldEvents {
         val registry = level.registryAccess()
             .lookupOrThrow(ModRegistries.HIGHWAY_SEGMENT)
 
+        println("Entries: ${registry.listElements().count()}")
 
-        for (holder in registry.listElements()) {
-            val id = holder.key().location()
-            val value = holder.value()
-
-            println("$id -> ${value.width}")
+        registry.listElements().forEach { holder ->
+            println(holder.key().location())
         }
 
     }
